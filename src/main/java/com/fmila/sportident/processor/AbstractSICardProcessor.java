@@ -6,7 +6,6 @@ import java.util.Date;
 
 import com.fmila.sportident.DownloadCallback;
 import com.fmila.sportident.DownloadException;
-import com.fmila.sportident.bean.DownloadStation;
 import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
@@ -15,10 +14,7 @@ public abstract class AbstractSICardProcessor {
 
 	private final DownloadCallback session;
 	private final FMilaSerialPort port;
-	private final Long mode;
 	private final Date currentEvtZero;
-	private final long eventNr;
-	private final DownloadStation station;
 
 	private String eCardNo;
 	private ArrayList<Punch> controlData; // punches with control no. and time
@@ -29,14 +25,11 @@ public abstract class AbstractSICardProcessor {
 	private byte[] rawData; // raw data in blocks
 	private int dataMessagesCounter = 0;
 
-	public AbstractSICardProcessor(DownloadStation station, FMilaSerialPort port, Date currentEvtZero, long eventNr, DownloadCallback session) {
+	public AbstractSICardProcessor(FMilaSerialPort port, Date currentEvtZero, DownloadCallback session) {
 		super();
 		this.session = session;
-		this.station = station;
 		this.port = port;
-		this.mode = station.getMode();
 		this.currentEvtZero = currentEvtZero;
-		this.eventNr = eventNr;
 	}
 
 	/**

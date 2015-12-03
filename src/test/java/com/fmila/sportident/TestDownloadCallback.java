@@ -9,12 +9,19 @@ import com.fmila.sportident.bean.Punch;
 
 public class TestDownloadCallback implements DownloadCallback {
 
+	private String url;
+
+	public TestDownloadCallback(String url) {
+		super();
+		this.url = url;
+	}
+
 	@Override
 	public boolean handleCardInserted(String eCardNo) {
 		System.out.println("ReadECard" + ": " + eCardNo);
 		return true;
 	}
-	
+
 	@Override
 	public boolean handleData(String cardNo, List<Punch> controlData) {
 		System.out.println("**Controls**" + "(" + cardNo + ")");
@@ -26,20 +33,19 @@ public class TestDownloadCallback implements DownloadCallback {
 		}
 		System.out.println("************");
 
-		/***************/
-		
+		// send URL to localhost server
 		try {
-		    URL u = new URL( "http://localhost/kletterhalle/upload.php?card=" + cardNo + "&punches=" + punchList.toString());
-		    Scanner scanner = new Scanner( u.openStream() );
-			String r = scanner.useDelimiter( "\\Z" ).next();
+			String request = url + "?card=" + cardNo + "&punches=" + punchList.toString();
+			System.out.println("GET " + request);
+			URL u = new URL(request);
+			Scanner scanner = new Scanner(u.openStream());
+			String r = scanner.useDelimiter("\\Z").next();
 			scanner.close();
-		    System.out.println( r );
+			System.out.println(r);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		/***************/
-		
+
 		return true;
 	}
 

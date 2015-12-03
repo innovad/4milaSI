@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.fmila.sportident.DownloadCallback;
 import com.fmila.sportident.DownloadException;
-import com.fmila.sportident.bean.DownloadStation;
 import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
@@ -13,8 +12,8 @@ import com.fmila.sportident.util.SICardUtility;
 
 public class SICardV6Processor extends AbstractSICardProcessor {
 
-	public SICardV6Processor(DownloadStation station, FMilaSerialPort port, Date currentEvtZero, long eventNr, DownloadCallback session) {
-		super(station, port, currentEvtZero, eventNr, session);
+	public SICardV6Processor(FMilaSerialPort port, Date currentEvtZero, DownloadCallback session) {
+		super(port, currentEvtZero, session);
 	}
 
 	private int numberOfDataMessages = 0;

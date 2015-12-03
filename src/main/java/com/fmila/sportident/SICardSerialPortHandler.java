@@ -3,7 +3,6 @@ package com.fmila.sportident;
 import java.io.IOException;
 import java.util.Date;
 
-import com.fmila.sportident.bean.DownloadStation;
 import com.fmila.sportident.processor.AbstractSICardProcessor;
 import com.fmila.sportident.processor.SICardV5Processor;
 import com.fmila.sportident.processor.SICardV6Processor;
@@ -14,9 +13,7 @@ import com.fmila.sportident.util.ByteUtility;
 
 public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 
-	private final DownloadStation station;
 	private final Date currentEvtZero;
-	private final long eventNr;
 	private AbstractSICardProcessor currentSICard;
 
 	private static final int LENGTH_CARD_INSERT = 12;
@@ -41,11 +38,9 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 	private static final int LOCATION_COMMAND = 1;
 	private static final int LOCATION_CARD_V6_TYPE = 6;
 
-	public SICardSerialPortHandler(DownloadStation station, Date currentEvtZero, long eventNr, DownloadCallback callback, FMilaSerialPort port) {
+	public SICardSerialPortHandler(Date currentEvtZero, DownloadCallback callback, FMilaSerialPort port) {
 		super(callback, port);
 		this.currentEvtZero = currentEvtZero;
-		this.eventNr = eventNr;
-		this.station = station;
 	}
 
 	/**
@@ -122,15 +117,15 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 
 		if (commandByte == CARD_V5) {
 			// V5 inserted
-			currentSICard = new SICardV5Processor(station, getPort(), currentEvtZero, eventNr, getCallback());
+			currentSICard = new SICardV5Processor(getPort(), currentEvtZero, getCallback());
 			currentSICard.handleCardInserted(data);
 		} else if (commandByte == CARD_V6) {
 			// V6 inserted
-			currentSICard = new SICardV6Processor(station, getPort(), currentEvtZero, eventNr, getCallback());
+			currentSICard = new SICardV6Processor(getPort(), currentEvtZero, getCallback());
 			currentSICard.handleCardInserted(data);
 		} else if (commandByte == CARD_V8_9) {
 			// V8-9 inserted
-			currentSICard = new SICardV8FamilyProcessor(station, getPort(), currentEvtZero, eventNr, getCallback());
+			currentSICard = new SICardV8FamilyProcessor(getPort(), currentEvtZero, getCallback());
 			currentSICard.handleCardInserted(data);
 		} else if (commandByte == CARD_REMOVED) {
 			// any card removed

@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
-import com.fmila.sportident.bean.DownloadStation;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.serial.SerialUtility;
 import com.fmila.sportident.util.CRCCalculator;
@@ -47,21 +46,33 @@ public class DownloadTest {
 			// serial ports by RXTX
 			try {
 				for (String port : SerialUtility.getPorts()) {
-					System.out.println(port + " (" + friendlyNames.get(port) + ")");
+					System.out.println("[" + port + "]" + " (" + friendlyNames.get(port) + ")");
 				}
 			} catch (java.lang.Error e) {
 				e.printStackTrace();
 			}
 
-		    //  prompt for the user's name
-		    System.out.print("Select a port (1-x) or q for exit: ");
-
-		    // get their input as a String
+		    //  Ask Port
+		    System.out.print("Select a port [...] or [q] for quit/exit: ");
 		    String selectedPort = scanner.next();
-
 			if (selectedPort.toLowerCase().equals("q")) {
 				System.out.println("Finished.");
 				System.exit(0);
+			}
+			
+			// Ask URL
+			String testUrl = "http://localhost/kletterhalle/upload.php";
+		    System.out.println("Select an URL: ");
+		    System.out.println("[d] " + testUrl);
+		    System.out.println("[q] quit/exit");
+		    System.out.println("or enter another URL: ");
+		    String selectedUrl = scanner.next();
+			if (selectedUrl.toLowerCase().equals("q")) {
+				System.out.println("Finished.");
+				System.exit(0);
+			}
+			if (selectedUrl.toLowerCase().equals("d")) {
+				selectedUrl = testUrl;
 			}
 
 			int speed = 38400;
@@ -72,7 +83,7 @@ public class DownloadTest {
 
 			// station init
 			Object lock = new Object();
-			TestDownloadCallback callback = new TestDownloadCallback();
+			TestDownloadCallback callback = new TestDownloadCallback(selectedUrl);
 			SIStationSerialPortHandler stationHandler = new SIStationSerialPortHandler(callback, lock, serialPort);
 			SISerialPortListener serialPortListener = new SISerialPortListener(callback);
 			serialPortListener.installHandler(stationHandler);
@@ -98,8 +109,7 @@ public class DownloadTest {
 			}
 
 			// station is initialized, now listen to cards
-			DownloadStation station = new DownloadStation();
-			SICardSerialPortHandler cardHandler = new SICardSerialPortHandler(station, new Date(), 1L, callback, serialPort);
+			SICardSerialPortHandler cardHandler = new SICardSerialPortHandler(new Date(), callback, serialPort);
 			serialPortListener.installHandler(cardHandler);
 			
 			// ***
