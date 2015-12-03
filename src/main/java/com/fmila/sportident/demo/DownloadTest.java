@@ -15,7 +15,7 @@ import com.fmila.sportident.serial.SerialUtility;
 import com.fmila.sportident.util.CRCCalculator;
 import com.fmila.sportident.util.WindowsRegistryUtility;
 
-public class DownloadTest {
+public class DownloadTest  {
 	
 	public static void main (String[] args) throws Exception {
 

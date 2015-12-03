@@ -1,12 +1,12 @@
 package com.fmila.sportident.demo;
 
-import java.io.IOException;
-import java.net.URL;
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.List;
-import java.util.Scanner;
 
 import com.fmila.sportident.DownloadCallback;
 import com.fmila.sportident.bean.Punch;
+
 
 public class TestDownloadCallback implements DownloadCallback {
 
@@ -35,13 +35,22 @@ public class TestDownloadCallback implements DownloadCallback {
 		// send URL to localhost server
 		try {
 			String request = url + "?card=" + cardNo + "&punches=" + punchList.toString();
-			System.out.println("Send request GET " + request);
-			URL u = new URL(request);
-			Scanner scanner = new Scanner(u.openStream());
-			String r = scanner.useDelimiter("\\Z").next();
-			scanner.close();
-			System.out.println("http result: " + r);
-		} catch (IOException e) {
+			
+
+			// open browser window
+			if(Desktop.isDesktopSupported())
+			{
+				Desktop.getDesktop().browse(new URI(request));
+			}			
+		    
+//			System.out.println("Send request GET " + request);
+//			URL u = new URL(request);
+//			Scanner scanner = new Scanner(u.openStream());
+//			String r = scanner.useDelimiter("\\Z").next();
+//			scanner.close();
+//			System.out.println("http result: " + r);
+		} catch (Exception e) {
+			// TODO
 			e.printStackTrace();
 		}
 
