@@ -76,10 +76,8 @@ public abstract class AbstractSICardProcessor {
 		dataMessagesCounter++;
 		// block 0
 		if (dataMessagesCounter == getNumberOfDataMessages()) {
+			// TODO
 			System.out.println("ProcessData");
-			// StatusUpdaterJob.setText(TEXTS.get(session.getLocale(),
-			// "ProcessData"), session);
-			// read
 			setECardNo(readSICardNoFromData(data));
 			setControlData(readControlsFromData(data));
 			setClearTime(readClearTime(data));

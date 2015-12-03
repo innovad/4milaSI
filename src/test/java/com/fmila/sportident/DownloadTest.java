@@ -23,6 +23,8 @@ public class DownloadTest {
 	public static void main (String[] args) throws Exception {
 
 		FMilaSerialPort serialPort = null;
+		
+	    Scanner scanner = new Scanner(System.in);
 
 		try {
 
@@ -45,13 +47,11 @@ public class DownloadTest {
 			// serial ports by RXTX
 			try {
 				for (String port : SerialUtility.getPorts()) {
-					System.out.println(port);
+					System.out.println(port + " (" + friendlyNames.get(port) + ")");
 				}
 			} catch (java.lang.Error e) {
 				e.printStackTrace();
 			}
-			
-		    Scanner scanner = new Scanner(System.in);
 
 		    //  prompt for the user's name
 		    System.out.print("Select a port (1-x) or q for exit: ");
@@ -117,6 +117,7 @@ public class DownloadTest {
 			if (serialPort != null) {
 				serialPort.close();
 			}
+			scanner.close();
 			System.out.println("Finished.");
 		}
 
