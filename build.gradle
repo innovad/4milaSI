@@ -13,3 +13,12 @@ dependencies {
     compile 'com.sparetimelabs:purejavacomm:0.0.28'
     testCompile 'junit:junit:4.12'
 }
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'com.fmila.sportident.demo.DownloadTest'
+  }
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}

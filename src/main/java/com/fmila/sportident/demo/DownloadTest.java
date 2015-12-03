@@ -1,4 +1,4 @@
-package com.fmila.sportident;
+package com.fmila.sportident.demo;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -6,23 +6,22 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
-
+import com.fmila.sportident.DownloadException;
+import com.fmila.sportident.SICardSerialPortHandler;
+import com.fmila.sportident.SISerialPortListener;
+import com.fmila.sportident.SIStationSerialPortHandler;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.serial.SerialUtility;
 import com.fmila.sportident.util.CRCCalculator;
 import com.fmila.sportident.util.WindowsRegistryUtility;
 
 public class DownloadTest {
-
-	@Test
-	public void testName() throws Exception {
-	}
 	
 	public static void main (String[] args) throws Exception {
 
 		FMilaSerialPort serialPort = null;
 		
+	    System.out.println("Scanning serial/USB ports...");
 	    Scanner scanner = new Scanner(System.in);
 
 		try {
@@ -53,7 +52,7 @@ public class DownloadTest {
 			}
 
 		    //  Ask Port
-		    System.out.print("Select a port [...] or [q] for quit/exit: ");
+		    System.out.println("Select a port [...] or [q] for quit/exit: ");
 		    String selectedPort = scanner.next();
 			if (selectedPort.toLowerCase().equals("q")) {
 				System.out.println("Finished.");
@@ -113,7 +112,7 @@ public class DownloadTest {
 			serialPortListener.installHandler(cardHandler);
 			
 			// ***
-		    System.out.print("Waiting for cards (q for Exit): ");
+		    System.out.println("===> Waiting for cards ([q] for quit/exit): ");
 			scanner.next();
 			
 			

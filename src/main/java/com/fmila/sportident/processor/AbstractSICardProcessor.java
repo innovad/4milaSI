@@ -104,8 +104,8 @@ public abstract class AbstractSICardProcessor {
 	 * @param data
 	 */
 	public final void handleCardRemoved(byte[] data) {
-		// TODO
 		System.out.println("ECardRemovedMessage");
+		session.handleCardRemoved();
 	}
 
 	protected abstract long readSICardNrOfInsertedCard(byte[] data);

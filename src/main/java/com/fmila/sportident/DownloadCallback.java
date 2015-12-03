@@ -10,4 +10,6 @@ public interface DownloadCallback {
 	
 	public boolean handleData(String cardNo, List<Punch> controlData);
 
+	public void handleCardRemoved();
+
 }

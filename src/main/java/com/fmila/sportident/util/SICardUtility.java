@@ -14,6 +14,32 @@ public final class SICardUtility {
 
 	public static final long INVALID_TIME = 61166000L;
 
+	public static Punch readTCardPunch(byte[] bytes, int index, long sortcode, Date evtZero) {
+		Punch punch = new Punch();
+		/**
+		8 byte punching record
+
+		indirect and direct addressing mode
+		record structure: CN-STD1-STD0-DATE1-DATE0-PTH-PTL-MS
+		CN - control station code number, 0...255
+		STD1             bit 17…9 -  Part of 24Bit SI-Station ID
+		STD0             bit  8…2  -  Part of 24Bit SI-Station ID
+		DATE1  bit 7-6  bit 1-0   -  Part of 24Bit SI-Station ID
+		            bit 5-2  4bit year  0-16 Part of year
+		            bit 1-0   bit 3-2 Part of 4bit Month 1-12
+		DATE0  bit 7-6   bit 1-0 Part of 4bit Month 1-12
+		            bit 5-1 5bit of Day in Month 1-31
+		            bit 0 - am/pm halfday
+		PTH, PTL - 12h binary punching time
+		MS       8bit 1/256 of seconds
+		**/
+		long code = ByteUtility.getLongFromByte(bytes[index]); // CN
+		punch.setSortCode(sortcode);
+		punch.setControlNo(Long.toString(code));
+		
+		return punch;
+	}
+	
 	public static Punch readV6Punch(byte[] bytes, int index, long sortcode, Date evtZero) throws DownloadException {
 		if (bytes == null || bytes.length < 4) {
 			throw new DownloadException("SI-Card punch must be 4 bytes.");

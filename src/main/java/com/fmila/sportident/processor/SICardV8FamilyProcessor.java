@@ -24,14 +24,13 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 
 	@Override
 	public long readSICardNrOfInsertedCard(byte[] data) {
-		return ByteUtility.getLongFromBytes(data[5], data[6], data[7], data[8]) & 16777215L; // hidden
-																								// secrets
-																								// :-)
+		return ByteUtility.getLongFromBytes(data[5], data[6], data[7], data[8]) & 16777215L; // hidden secrets :-)
 	}
 
 	@Override
 	protected byte[] getRequestDataCommand(int messageNr) throws DownloadException {
-		if (isType8or9()) {
+		if (ECardUtility.getType(getECardNo()) == ECardType.SICARD8 ||
+		ECardUtility.getType(getECardNo()) == ECardType.SICARD9) {
 			if (messageNr == 1) {
 				return COMMAND_REQUEST_DATAV8_0;
 			}
@@ -44,24 +43,21 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 		}
 	}
 
-	private boolean isType8or9() throws DownloadException {
-		return ECardUtility.getType(getECardNo()) == ECardType.SICARD8 ||
-				ECardUtility.getType(getECardNo()) == ECardType.SICARD9;
-	}
-
 	@Override
 	protected String readSICardNoFromData(byte[] data) {
-		return Long.toString(ByteUtility.getLongFromBytes(data[24], data[25], data[26], data[27]) & 16777215L); // hidden
-																												// secrets
-																												// :-)
+		return Long.toString(ByteUtility.getLongFromBytes(data[24], data[25], data[26], data[27]) & 16777215L); // hidden secrets :-)
 	}
 
 	@Override
 	public int getNumberOfDataMessages() throws DownloadException {
-		if (isType8or9()) {
+		if (ECardUtility.getType(getECardNo()) == ECardType.SICARD8) {
+			return 2;
+		} else if (ECardUtility.getType(getECardNo()) == ECardType.SICARD9) {
 			return 2;
 		} else if (ECardUtility.getType(getECardNo()) == ECardType.pCARD) {
-			return 1;
+			return 2;
+		} else if (ECardUtility.getType(getECardNo()) == ECardType.tCARD) {
+			return 2;
 		}
 		return 5;
 	}
@@ -80,11 +76,21 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 		} else if (cardType == 2) {
 			// SI Card 8 30 Records
 			firstPunch = 136;
+		} else if (cardType == 4) {
+			// pCard
+			firstPunch = 176;
+		} else if (cardType == 6) {
+			// tCard
+			numberOfPunches = numberOfPunches / 2;
 		}
 
 		for (int i = 0; i < numberOfPunches; i++) {
-			// same punch structure as V6
-			punches.add(SICardUtility.readV6Punch(data, firstPunch + i * 4, i + 1, getCurrentEvtZero()));
+			if (cardType == 6) {
+				punches.add(SICardUtility.readTCardPunch(data, firstPunch + i * 8, i + 1, getCurrentEvtZero()));
+			} else {
+				// same punch structure as V6
+				punches.add(SICardUtility.readV6Punch(data, firstPunch + i * 4, i + 1, getCurrentEvtZero()));
+			}
 		}
 
 		return punches;
