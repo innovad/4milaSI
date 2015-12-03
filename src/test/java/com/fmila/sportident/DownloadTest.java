@@ -72,8 +72,7 @@ public class DownloadTest {
 
 			// station init
 			Object lock = new Object();
-			DownloadCallback callback = new DownloadCallback() {
-			};
+			TestDownloadCallback callback = new TestDownloadCallback();
 			SIStationSerialPortHandler stationHandler = new SIStationSerialPortHandler(callback, lock, serialPort);
 			SISerialPortListener serialPortListener = new SISerialPortListener(callback);
 			serialPortListener.installHandler(stationHandler);
@@ -118,6 +117,7 @@ public class DownloadTest {
 			if (serialPort != null) {
 				serialPort.close();
 			}
+			System.out.println("Finished.");
 		}
 
 	}

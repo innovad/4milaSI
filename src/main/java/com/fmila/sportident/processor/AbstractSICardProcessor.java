@@ -15,7 +15,7 @@ public abstract class AbstractSICardProcessor {
 
 	private final DownloadCallback session;
 	private final FMilaSerialPort port;
-	private final long mode;
+	private final Long mode;
 	private final Date currentEvtZero;
 	private final long eventNr;
 	private final DownloadStation station;
@@ -49,20 +49,14 @@ public abstract class AbstractSICardProcessor {
 		long cardNr = readSICardNrOfInsertedCard(data);
 		String cardNo = String.valueOf(cardNr);
 		setECardNo(cardNo);
-		// TODO
-		System.out.println("ReadECard");
-
-		// if (CompareUtility.equals(mode,
-		// ECardStationDownloadModusCodeType.EntryCode.ID)) {
-		// SICardEntryJob job = new SICardEntryJob(session, port, "" + cardNr);
-		// job.start();
-		// }
-		// else {
-		// // request more data
-		// StatusUpdaterJob.setText(TEXTS.get(session.getLocale(),
-		// "RequestECardData"), session);
-		// port.write(getRequestDataCommand(dataMessagesCounter + 1));
-		// }
+		
+		boolean requestMoreData = session.handleCardInserted(cardNo);
+		
+		if (requestMoreData) {
+			// TODO
+			System.out.println("RequestECardData" + ": " + eCardNo);
+			port.write(getRequestDataCommand(dataMessagesCounter + 1));
+		}
 	}
 
 	/**
@@ -92,19 +86,11 @@ public abstract class AbstractSICardProcessor {
 			setCheckTime(readCheckTime(data));
 			setStartTime(readStartTime(data));
 			setFinishTime(readFinishTime(data));
-			// if (mode ==
-			// ECardStationDownloadModusCodeType.CourseAndClassFromECardCode.ID)
-			// {
-			// FMilaClientSyncJob job = new CourseAndClassFromECardJob(session,
-			// port, this);
-			// job.start();
-			// }
-			// else {
-			// removeSICard();
-			// FMilaClientSyncJob job = new SICardDownloadJob(station, session,
-			// port, mode, getCurrentEvtZero(), eventNr, this);
-			// job.start();
-			// }
+			
+			boolean remove = session.handleData(getECardNo(), controlData);
+			if (remove) {
+				removeSICard();
+			}
 		}
 		// request next block
 		else {

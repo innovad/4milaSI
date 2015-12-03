@@ -61,6 +61,8 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 	public int getNumberOfDataMessages() throws DownloadException {
 		if (isType8or9()) {
 			return 2;
+		} else if (ECardUtility.getType(getECardNo()) == ECardType.pCARD) {
+			return 1;
 		}
 		return 5;
 	}
