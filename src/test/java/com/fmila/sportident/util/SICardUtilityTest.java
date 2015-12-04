@@ -5,7 +5,6 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.bean.Punch;
 
 

@@ -1,9 +1,12 @@
-package com.fmila.sportident;
+package com.fmila.sportident.port;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.fmila.sportident.DownloadSession;
+import com.fmila.sportident.TestSerialPortHandler;
+import com.fmila.sportident.port.SISerialPortListener;
 import com.fmila.sportident.util.ByteUtility;
 
 

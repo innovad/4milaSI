@@ -1,10 +1,12 @@
-package com.fmila.sportident;
+package com.fmila.sportident.port;
 
 import java.io.IOException;
 
+import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
 import com.fmila.sportident.util.CRCCalculator;
+import com.fmila.sportident.util.DownloadException;
 
 public final class SIStationSerialPortHandler extends AbstractSISerialPortHandler {
 

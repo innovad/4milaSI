@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import com.fmila.sportident.DownloadException;
-import com.fmila.sportident.ECardType;
 import com.fmila.sportident.bean.Punch;
 
 public final class SICardUtility {

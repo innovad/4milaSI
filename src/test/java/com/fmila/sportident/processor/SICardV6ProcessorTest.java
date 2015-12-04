@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.fmila.sportident.DownloadSession;
-import com.fmila.sportident.DownloadException;
-import com.fmila.sportident.FMilaSerialTestPort;
+import com.fmila.sportident.port.FMilaSerialTestPort;
 import com.fmila.sportident.processor.SICardV6Processor.MODEL;
 import com.fmila.sportident.serial.FMilaSerialPort;
+import com.fmila.sportident.util.DownloadException;
 
 
 public class SICardV6ProcessorTest {

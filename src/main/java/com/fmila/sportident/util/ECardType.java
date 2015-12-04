@@ -1,4 +1,4 @@
-package com.fmila.sportident;
+package com.fmila.sportident.util;
 
 public enum ECardType {
 

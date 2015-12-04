@@ -12,4 +12,8 @@ public interface DownloadSession {
 
 	public void handleCardRemoved();
 
+	public void waitForCards();
+
+	public void close();
+
 }

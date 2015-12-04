@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.fmila.sportident.DownloadSession;
-import com.fmila.sportident.DownloadException;
-import com.fmila.sportident.ECardType;
 import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
+import com.fmila.sportident.util.DownloadException;
+import com.fmila.sportident.util.ECardType;
 import com.fmila.sportident.util.SICardUtility;
 
 public class SICardV8FamilyProcessor extends AbstractSICardProcessor {

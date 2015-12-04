@@ -1,10 +1,13 @@
-package com.fmila.sportident;
+package com.fmila.sportident.port;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.fmila.sportident.DownloadSession;
+import com.fmila.sportident.port.SIStationSerialPortHandler;
 import com.fmila.sportident.serial.FMilaSerialPort;
+import com.fmila.sportident.util.DownloadException;
 
 public class SIStationSerialPortHandlerTest {
 

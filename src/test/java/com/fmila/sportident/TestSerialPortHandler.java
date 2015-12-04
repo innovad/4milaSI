@@ -2,6 +2,10 @@ package com.fmila.sportident;
 
 import java.io.IOException;
 
+import com.fmila.sportident.port.AbstractSISerialPortHandler;
+import com.fmila.sportident.port.FMilaSerialTestPort;
+import com.fmila.sportident.util.DownloadException;
+
 
 public class TestSerialPortHandler extends AbstractSISerialPortHandler {
 
