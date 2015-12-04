@@ -3,7 +3,7 @@ package com.fmila.sportident.processor;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.fmila.sportident.DownloadCallback;
+import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.ECardType;
 import com.fmila.sportident.bean.Punch;
@@ -17,7 +17,7 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 	private static final byte[] COMMAND_REQUEST_DATAV8_1 = new byte[] { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x01, (byte) 0xe3, (byte) 0x09, (byte) 0x03 };
 	private static final byte[] COMMAND_REQUEST_DATAV10_04567 = new byte[] { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x08, (byte) 0xea, (byte) 0x09, (byte) 0x03 };
 
-	public SICardV8FamilyProcessor(FMilaSerialPort port, Date currentEvtZero, DownloadCallback session) {
+	public SICardV8FamilyProcessor(FMilaSerialPort port, Date currentEvtZero, DownloadSession session) {
 		super(port, currentEvtZero, session);
 	}
 

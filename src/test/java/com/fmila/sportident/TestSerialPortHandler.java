@@ -7,7 +7,7 @@ public class TestSerialPortHandler extends AbstractSISerialPortHandler {
 
   private byte[] data;
 
-  public TestSerialPortHandler(DownloadCallback session) {
+  public TestSerialPortHandler(DownloadSession session) {
     super(session, new FMilaSerialTestPort());
   }
 

@@ -90,7 +90,7 @@ public class SISerialPortListenerTest {
   }
 
   private TestObjects createSerialInterface() {
-	DownloadCallback session = Mockito.mock(DownloadCallback.class);
+	DownloadSession session = Mockito.mock(DownloadSession.class);
     SISerialPortListener listener = new SISerialPortListener(session);
     TestSerialPortHandler serialPortHandler = new TestSerialPortHandler(session);
     listener.installHandler(serialPortHandler);

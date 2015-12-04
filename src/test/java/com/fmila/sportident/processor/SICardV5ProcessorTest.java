@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.fmila.sportident.DownloadCallback;
+import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.FMilaSerialTestPort;
 import com.fmila.sportident.serial.FMilaSerialPort;
@@ -20,7 +20,7 @@ public class SICardV5ProcessorTest {
     FMilaSerialPort testPort = new FMilaSerialTestPort();
 
     GregorianCalendar greg = new GregorianCalendar(2012, 1, 1, 12, 30, 00);
-    SICardV5Processor processor = new SICardV5Processor(testPort, greg.getTime(), Mockito.mock(DownloadCallback.class));
+    SICardV5Processor processor = new SICardV5Processor(testPort, greg.getTime(), Mockito.mock(DownloadSession.class));
 
     byte[] insertedData = new byte[]{2, -27, 6, 0, 4, 0, 0, -10, -19, -29, -101, 3};
     processor.handleCardInserted(insertedData);
@@ -58,7 +58,7 @@ public class SICardV5ProcessorTest {
     FMilaSerialPort testPort = new FMilaSerialTestPort();
 
     GregorianCalendar greg = new GregorianCalendar(2012, 1, 1, 12, 30, 00);
-    SICardV5Processor processor = new SICardV5Processor(testPort, greg.getTime(), Mockito.mock(DownloadCallback.class));
+    SICardV5Processor processor = new SICardV5Processor(testPort, greg.getTime(), Mockito.mock(DownloadSession.class));
 
     byte[] insertedData = new byte[]{2, -27, 6, 0, 3, 0, 3, 126, 116, 81, -112, 3};
     processor.handleCardInserted(insertedData);

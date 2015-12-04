@@ -11,7 +11,7 @@ public final class SIStationSerialPortHandler extends AbstractSISerialPortHandle
 	private final Object lock;
 	private boolean isInitialized = false;
 
-	public SIStationSerialPortHandler(DownloadCallback session, Object lock, FMilaSerialPort port) {
+	public SIStationSerialPortHandler(DownloadSession session, Object lock, FMilaSerialPort port) {
 		super(session, port);
 		this.lock = lock;
 	}

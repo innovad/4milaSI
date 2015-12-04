@@ -3,7 +3,7 @@ package com.fmila.sportident.processor;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.fmila.sportident.DownloadCallback;
+import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.serial.FMilaSerialPort;
@@ -12,7 +12,7 @@ import com.fmila.sportident.util.SICardUtility;
 
 public class SICardV6Processor extends AbstractSICardProcessor {
 
-	public SICardV6Processor(FMilaSerialPort port, Date currentEvtZero, DownloadCallback session) {
+	public SICardV6Processor(FMilaSerialPort port, Date currentEvtZero, DownloadSession session) {
 		super(port, currentEvtZero, session);
 	}
 

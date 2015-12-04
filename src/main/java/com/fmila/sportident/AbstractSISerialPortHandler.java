@@ -6,11 +6,11 @@ import com.fmila.sportident.serial.FMilaSerialPort;
 
 public abstract class AbstractSISerialPortHandler {
 
-	private final DownloadCallback callback;
+	private final DownloadSession downloadSession;
 	private final FMilaSerialPort port;
 
-	public AbstractSISerialPortHandler(DownloadCallback callback, FMilaSerialPort port) {
-		this.callback = callback;
+	public AbstractSISerialPortHandler(DownloadSession downloadSession, FMilaSerialPort port) {
+		this.downloadSession = downloadSession;
 		this.port = port;
 	}
 
@@ -20,8 +20,8 @@ public abstract class AbstractSISerialPortHandler {
 		return port;
 	}
 
-	public DownloadCallback getCallback() {
-		return callback;
+	public DownloadSession getDownloadSession() {
+		return downloadSession;
 	}
 
 }

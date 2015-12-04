@@ -9,12 +9,12 @@ import com.fmila.sportident.util.CRCCalculator;
 
 public class SISerialPortListener implements FMilaSerialEventListener {
 
-	private final DownloadCallback session;
+	private final DownloadSession session;
 	private FMilaSerialPort port;
 	private AbstractSISerialPortHandler handler;
 	private byte[] lastPartialMessage;
 
-	public SISerialPortListener(DownloadCallback session) {
+	public SISerialPortListener(DownloadSession session) {
 		this.session = session;
 	}
 
@@ -91,7 +91,7 @@ public class SISerialPortListener implements FMilaSerialEventListener {
 		return port;
 	}
 
-	public DownloadCallback getSession() {
+	public DownloadSession getSession() {
 		return session;
 	}
 

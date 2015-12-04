@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fmila.sportident.bean.Punch;
 
-public interface DownloadCallback {
+public interface DownloadSession {
 	
 	public boolean handleCardInserted(String cardNo);
 	

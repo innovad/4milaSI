@@ -38,8 +38,8 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 	private static final int LOCATION_COMMAND = 1;
 	private static final int LOCATION_CARD_V6_TYPE = 6;
 
-	public SICardSerialPortHandler(Date currentEvtZero, DownloadCallback callback, FMilaSerialPort port) {
-		super(callback, port);
+	public SICardSerialPortHandler(Date currentEvtZero, DownloadSession downloadSession, FMilaSerialPort port) {
+		super(downloadSession, port);
 		this.currentEvtZero = currentEvtZero;
 	}
 
@@ -117,15 +117,15 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 
 		if (commandByte == CARD_V5) {
 			// V5 inserted
-			currentSICard = new SICardV5Processor(getPort(), currentEvtZero, getCallback());
+			currentSICard = new SICardV5Processor(getPort(), currentEvtZero, getDownloadSession());
 			currentSICard.handleCardInserted(data);
 		} else if (commandByte == CARD_V6) {
 			// V6 inserted
-			currentSICard = new SICardV6Processor(getPort(), currentEvtZero, getCallback());
+			currentSICard = new SICardV6Processor(getPort(), currentEvtZero, getDownloadSession());
 			currentSICard.handleCardInserted(data);
 		} else if (commandByte == CARD_V8_9) {
 			// V8-9 inserted
-			currentSICard = new SICardV8FamilyProcessor(getPort(), currentEvtZero, getCallback());
+			currentSICard = new SICardV8FamilyProcessor(getPort(), currentEvtZero, getDownloadSession());
 			currentSICard.handleCardInserted(data);
 		} else if (commandByte == CARD_REMOVED) {
 			// any card removed

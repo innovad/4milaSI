@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.fmila.sportident.DownloadCallback;
+import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.FMilaSerialTestPort;
 import com.fmila.sportident.processor.SICardV6Processor.MODEL;
@@ -142,7 +142,7 @@ public class SICardV6ProcessorTest {
     FMilaSerialPort testPort = new FMilaSerialTestPort();
 
     GregorianCalendar greg = new GregorianCalendar(2012, 1, 1, 12, 30, 00);
-    SICardV6Processor processor = new SICardV6Processor(testPort, greg.getTime(), Mockito.mock(DownloadCallback.class));
+    SICardV6Processor processor = new SICardV6Processor(testPort, greg.getTime(), Mockito.mock(DownloadSession.class));
     return processor;
   }
 

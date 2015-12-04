@@ -155,7 +155,7 @@ public class SICardSerialPortHandlerTest {
 
   private SICardSerialPortHandler prepareSerialPortHandler() throws DownloadException {
     FMilaSerialPort port = new FMilaSerialTestPort();
-    SICardSerialPortHandler handler = new SICardSerialPortHandler(new Date(), Mockito.mock(DownloadCallback.class), port);
+    SICardSerialPortHandler handler = new SICardSerialPortHandler(new Date(), Mockito.mock(DownloadSession.class), port);
     return handler;
   }
 

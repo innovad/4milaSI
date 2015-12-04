@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.fmila.sportident.DownloadCallback;
+import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.FMilaSerialTestPort;
 import com.fmila.sportident.serial.FMilaSerialPort;
@@ -151,7 +151,7 @@ public class SICardV8FamilyProcessorTest {
   private SICardV8FamilyProcessor createSICardProcessor() throws DownloadException {
     FMilaSerialPort testPort = new FMilaSerialTestPort();
 
-    SICardV8FamilyProcessor processor = new SICardV8FamilyProcessor(testPort, evtZero, Mockito.mock(DownloadCallback.class));
+    SICardV8FamilyProcessor processor = new SICardV8FamilyProcessor(testPort, evtZero, Mockito.mock(DownloadSession.class));
     Assert.assertEquals("Zero Time", evtZero.getTime(), processor.getCurrentEvtZero().getTime());
     return processor;
   }
