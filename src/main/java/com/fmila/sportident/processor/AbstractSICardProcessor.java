@@ -1,8 +1,8 @@
 package com.fmila.sportident.processor;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.bean.Punch;
@@ -17,7 +17,7 @@ public abstract class AbstractSICardProcessor {
 	private final Date currentEvtZero;
 
 	private String eCardNo;
-	private ArrayList<Punch> controlData; // punches with control no. and time
+	private List<Punch> controlData; // punches with control no. and time
 	private Long clearTime; // clear time if available
 	private Long checkTime; // check time if available
 	private Long startTime; // start time if available
@@ -124,7 +124,7 @@ public abstract class AbstractSICardProcessor {
 
 	public abstract int getNumberOfDataMessages() throws DownloadException;
 
-	protected abstract ArrayList<Punch> readControlsFromData(byte[] data) throws DownloadException;
+	protected abstract List<Punch> readControlsFromData(byte[] data) throws DownloadException;
 
 	public String getECardNo() {
 		return this.eCardNo;
@@ -134,11 +134,11 @@ public abstract class AbstractSICardProcessor {
 		this.eCardNo = number;
 	}
 
-	public ArrayList<Punch> getControlData() {
+	public List<Punch> getControlData() {
 		return controlData;
 	}
 
-	public void setControlData(ArrayList<Punch> controlData) {
+	public void setControlData(List<Punch> controlData) {
 		this.controlData = controlData;
 	}
 

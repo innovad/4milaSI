@@ -12,7 +12,7 @@ public final class DownloadPorts {
 	public static Map<String, String> getPorts() {
 		
 		// find friendly names
-		HashMap<String, String> friendlyNames = new HashMap<String, String>();
+		Map<String, String> friendlyNames = new HashMap<String, String>();
 		if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
 			String[] registryList = WindowsRegistryUtility.listRegistryEntries("HKLM\\System\\CurrentControlSet\\Enum")
 					.split("\n");

@@ -2,6 +2,7 @@ package com.fmila.sportident.processor;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.bean.Punch;
@@ -42,8 +43,8 @@ public class SICardV5Processor extends AbstractSICardProcessor {
 	}
 
 	@Override
-	protected ArrayList<Punch> readControlsFromData(byte[] data) {
-		ArrayList<Punch> punches = new ArrayList<Punch>();
+	protected List<Punch> readControlsFromData(byte[] data) {
+		List<Punch> punches = new ArrayList<Punch>();
 
 		int numPunches = (data[23] & 0xff) - 1;
 		int numFullPunches = numPunches;
