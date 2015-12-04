@@ -12,4 +12,5 @@ dependencies {
     compile 'com.neuronrobotics:nrjavaserial:3.11.0'
     compile 'com.sparetimelabs:purejavacomm:0.0.28'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
 }
