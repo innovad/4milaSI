@@ -24,8 +24,8 @@ public class StringUtility {
 		if (s == null || start >= s.length()) {
 			return "";
 		}
-		len = Math.min(s.length() - start, len);
-		return s.substring(start, start + len);
+		int correctedLength = Math.min(s.length() - start, len);
+		return s.substring(start, start + correctedLength);
 	}
 
 }
