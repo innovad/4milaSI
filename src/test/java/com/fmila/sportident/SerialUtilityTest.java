@@ -16,7 +16,7 @@ import com.fmila.sportident.util.TestUtility;
 
 public class SerialUtilityTest {
 
-  static SerialLibrary defaultLibrary;
+  private static SerialLibrary defaultLibrary;
 
   @BeforeClass
   public static void beforeClass() {
