@@ -12,7 +12,7 @@ import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.port.FMilaSerialTestPort;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
-import com.fmila.sportident.util.DateUtility;
+import com.fmila.sportident.util.DateTimeUtility;
 import com.fmila.sportident.util.DownloadException;
 
 
@@ -23,8 +23,8 @@ public class SICardV8FamilyProcessorTest {
 
   @Before
   public void before() throws DownloadException {
-    evtZero = DateUtility.parse("10-11-2012 08:00:00.000", "dd-MM-yyyy HH:mm:ss.SSS");
-    evtFinish = DateUtility.parse("10-11-2012 12:00:00.000", "dd-MM-yyyy HH:mm:ss.SSS");
+    evtZero = DateTimeUtility.parse("10-11-2012 08:00:00.000", "dd-MM-yyyy HH:mm:ss.SSS");
+    evtFinish = DateTimeUtility.parse("10-11-2012 12:00:00.000", "dd-MM-yyyy HH:mm:ss.SSS");
   }
 
   @Test
@@ -140,7 +140,7 @@ public class SICardV8FamilyProcessorTest {
   }
 
   private void assertTime(String message, String expected, Long actual) {
-    String actualStr = DateUtility.format(DateUtility.addMilliSeconds(evtZero, actual), "dd-MM-yyyy HH:mm:ss.SSS");
+    String actualStr = DateTimeUtility.format(DateTimeUtility.addMilliSeconds(evtZero, actual), "dd-MM-yyyy HH:mm:ss.SSS");
     Assert.assertEquals(message, expected, actualStr);
   }
 

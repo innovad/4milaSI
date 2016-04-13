@@ -55,11 +55,11 @@ public final class SICardUtility {
 
 		punch.setSortCode(sortcode);
 		punch.setControlNo(Long.toString(code));
-		punch.setRawTime(alignToEvtZeroTime(punchTime, greg.getTime(), evtZero));
+		punch.setRawTime(DateTimeUtility.alignDateOfTime(punchTime, greg.getTime(), evtZero));
 
 		if (punchTime != null) {
 			System.out.println(code);
-			System.out.println(DateUtility.format(new Date(punch.getRawTime()), "dd-MM-yyyy HH:mm:ss.SSS"));
+			System.out.println(DateTimeUtility.format(new Date(punch.getRawTime()), "dd-MM-yyyy HH:mm:ss.SSS"));
 		}
 
 		return punch;
@@ -69,7 +69,7 @@ public final class SICardUtility {
 	 * record structure: PTD - CN - PTH - PTL<br>
 	 * <br>
 	 * CN - control station code number, 0...255 or subsecond value<br>
-	 * PTD - day of week / halfday bit 0 - am/pm bit 3...1 - day of week, 000 = Sunday, 110 = Saturday bit 5...4 - week counter 0�3, relative bit 7...6 - control station code number high (...1023) (reserved) punching time<br>
+	 * PTD - day of week / halfday bit 0 - am/pm bit 3...1 - day of week, 000 = Sunday, 110 = Saturday bit 5...4 - week counter 0-3, relative bit 7...6 - control station code number high (...1023) (reserved) punching time<br>
 	 * PTH, PTL - 12h binary<br>
 	 * <br>
 	 * 1 subsecond value only for "start" and "finish" possible new from sw5.49: bit7=1 in PTD-byte indicates a subsecond value in CN byte (use always code numbers <256 for start/finish)<br>
@@ -93,7 +93,7 @@ public final class SICardUtility {
 
 		punch.setSortCode(sortcode);
 		punch.setControlNo(Long.toString(code));
-		punch.setRawTime(alignToEvtZeroTime(punchTime, null, evtZero));
+		punch.setRawTime(DateTimeUtility.alignDateOfTime(punchTime, null, evtZero));
 
 		return punch;
 	}
@@ -113,72 +113,13 @@ public final class SICardUtility {
 	}
 
 	private static Long alignToEvtZeroTimeV5(Long time, Date evtZero) {
-		time = alignToEvtZeroTime(time, null, evtZero);
+		time = DateTimeUtility.alignDateOfTime(time, null, evtZero);
 		if (time != null && time < 0) {
 			// siV5 is 12h only
 			return time + 12 * 60 * 60 * 1000; // 12h
 		} else {
 			return time;
 		}
-	}
-
-	private static Long alignToEvtZeroTime(Long time, Date evtPunch, Date evtZero) {
-		if (time == null) {
-			return null;
-		}
-		if (evtZero == null) {
-			// set absolute date/time
-			return DateUtility.addMilliSeconds(truncDate(evtPunch == null ? new Date() : evtPunch), time).getTime();
-		} else {
-			// set relative date/time to evtZero
-			Long evtZeroHoursMinsSecsInMilliSecs = getDateDifferenceInMilliSeconds(truncDate(evtZero), evtZero);
-			return time - evtZeroHoursMinsSecsInMilliSecs;
-		}
-	}
-
-	private static Date truncDate(Date d) {
-		if (d == null) {
-			return null;
-		}
-		Calendar c = Calendar.getInstance();
-		c.setTime(d);
-		truncCalendar(c);
-		return c.getTime();
-	}
-
-	private static void truncCalendar(Calendar c) {
-		if (c == null) {
-			return;
-		}
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		c.set(Calendar.MILLISECOND, 0);
-	}
-
-	private static Long getDateDifferenceInMilliSeconds(Date zeroTime, Date overallTime) {
-		Long timeDiff = null;
-
-		if (overallTime != null && zeroTime != null) {
-
-			timeDiff = (overallTime.getTime() - zeroTime.getTime());
-
-			// if the dates are not in the same timezone (e.g. CET and CEST),
-			// subtract the difference
-			GregorianCalendar zeroTimeCal = new GregorianCalendar();
-			zeroTimeCal.setTime(zeroTime);
-			int zeroTimeOffset = zeroTimeCal.get(Calendar.ZONE_OFFSET) + zeroTimeCal.get(Calendar.DST_OFFSET);
-
-			GregorianCalendar overallTimeCal = new GregorianCalendar();
-			overallTimeCal.setTime(overallTime);
-			int overallTimeOffset = overallTimeCal.get(Calendar.ZONE_OFFSET) + overallTimeCal.get(Calendar.DST_OFFSET);
-
-			if (zeroTimeOffset != overallTimeOffset) {
-				timeDiff = timeDiff + (overallTimeOffset - zeroTimeOffset);
-			}
-		}
-
-		return timeDiff;
 	}
 
 	public static ECardType getType(String eCardNo) throws DownloadException {

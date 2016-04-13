@@ -108,26 +108,26 @@ public class SICardUtilityTest {
 				-18, -18, -18 };
 		Punch punch = SICardUtility.readTCardPunch(bytes, 0, 1L, null);
 		assertEquals("31", punch.getControlNo());
-		assertEquals("16:12:10.192", DateUtility.format(new Date(punch.getRawTime()),"HH:mm:ss.SSS"));
+		assertEquals("16:12:10.192", DateTimeUtility.format(new Date(punch.getRawTime()),"HH:mm:ss.SSS"));
 	}
 
 	private Punch doTestV5(String evtZeroString, String punchTimeString) throws DownloadException {
 		byte[] bytes = new byte[] { 34, 35, -116 };
-		Date evtZero = DateUtility.parse(evtZeroString, "dd-MM-yyyy HH:mm:ss.SSS");
+		Date evtZero = DateTimeUtility.parse(evtZeroString, "dd-MM-yyyy HH:mm:ss.SSS");
 		Punch punch = SICardUtility.readV5Punch(bytes, 0, 0, evtZero);
 		assertEquals("Control No", "34", punch.getControlNo());
-		Date punched = DateUtility.addMilliSeconds(evtZero, punch.getRawTime());
-		assertEquals("Time", punchTimeString, DateUtility.format(punched, "dd-MM-yyyy HH:mm:ss.SSS"));
+		Date punched = DateTimeUtility.addMilliSeconds(evtZero, punch.getRawTime());
+		assertEquals("Time", punchTimeString, DateTimeUtility.format(punched, "dd-MM-yyyy HH:mm:ss.SSS"));
 		return punch;
 	}
 
 	private Punch doTestV6(String evtZeroString, String punchTimeString) throws DownloadException {
 		byte[] bytes = new byte[] { 13, 54, 60, -122 };
-		Date evtZero = DateUtility.parse(evtZeroString, "dd-MM-yyyy HH:mm:ss.SSS");
+		Date evtZero = DateTimeUtility.parse(evtZeroString, "dd-MM-yyyy HH:mm:ss.SSS");
 		Punch punch = SICardUtility.readV6Punch(bytes, 0, 0, evtZero);
 		assertEquals("Control No", "54", punch.getControlNo());
-		Date punched = DateUtility.addMilliSeconds(evtZero, punch.getRawTime());
-		assertEquals("Time", punchTimeString, DateUtility.format(punched, "dd-MM-yyyy HH:mm:ss.SSS"));
+		Date punched = DateTimeUtility.addMilliSeconds(evtZero, punch.getRawTime());
+		assertEquals("Time", punchTimeString, DateTimeUtility.format(punched, "dd-MM-yyyy HH:mm:ss.SSS"));
 		return punch;
 	}
 
