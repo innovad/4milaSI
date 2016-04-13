@@ -62,7 +62,7 @@ public class DateTimeUtility {
 			// try to set absolute date/time, either from sysdate or from card
 			return DateTimeUtility.addMilliSeconds(truncDate(dateFromCard == null ? new Date() : dateFromCard), millsecondsFromCard).getTime();
 		} else {
-			// set relative date/time to given zero time
+			// set relative time to given zero date/time
 			Long evtZeroHoursMinsSecsInMilliSecs = getDateDifferenceInMilliSeconds(truncDate(givenZeroDate), givenZeroDate);
 			return millsecondsFromCard - evtZeroHoursMinsSecsInMilliSecs;
 		}
