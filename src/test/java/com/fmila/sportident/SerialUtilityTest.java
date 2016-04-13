@@ -1,8 +1,11 @@
 package com.fmila.sportident;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,19 +29,19 @@ public class SerialUtilityTest {
   @Test
   public void testPure() throws Exception {
     SerialUtility.setLibrary(SerialLibrary.PURE);
-    SerialUtility.getPorts();
+    assertNotNull(SerialUtility.getPorts());
   }
 
   @Test
   public void testRxTx() throws Exception {
     SerialUtility.setLibrary(SerialLibrary.RXTX);
-    SerialUtility.getPorts();
+    assertNotNull(SerialUtility.getPorts());
   }
 
   @Test
   public void testJssc() throws Exception {
     SerialUtility.setLibrary(SerialLibrary.JSSC);
-    SerialUtility.getPorts();
+    assertNotNull(SerialUtility.getPorts());
   }
 
   @Test(expected = IOException.class)

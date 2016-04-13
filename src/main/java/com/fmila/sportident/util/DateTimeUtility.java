@@ -29,8 +29,9 @@ public class DateTimeUtility {
 		}
 	}
 
-	public static Date addMilliSeconds(Date baseDate, Long ms) {
+	public static Date addMilliSeconds(Date baseDate, Long milliseconds) {
 		Date resultDate = null;
+		Long ms = milliseconds;
 
 		if (baseDate != null && ms != null) {
 			resultDate = new Date(baseDate.getTime() + ms);

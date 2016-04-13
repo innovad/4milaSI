@@ -12,13 +12,13 @@ import com.fmila.sportident.util.DownloadException;
 import com.fmila.sportident.util.SICardUtility;
 
 public class SICardV6Processor extends AbstractSICardProcessor {
+	
+	private int numberOfDataMessages = 0;
+	private MODEL model;
 
 	public SICardV6Processor(FMilaSerialPort port, Date currentEvtZero, DownloadSession session) {
 		super(port, currentEvtZero, session);
 	}
-
-	private int numberOfDataMessages = 0;
-	private MODEL model;
 
 	public enum MODEL {
 		SIX, SIXSTAR
