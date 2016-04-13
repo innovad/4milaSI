@@ -14,10 +14,10 @@ import com.fmila.sportident.util.DownloadException;
 
 public class DownloadStation {
 
-	private DownloadSession downloadSession;
 	private String port;
 	private int speed;
 	private Date evtZero;
+	private DownloadSession downloadSession;
 	
 	public DownloadStation(String port, int speed, Date evtZero, DownloadSession downloadSession) {
 		super();
@@ -80,5 +80,5 @@ public class DownloadStation {
 		
 		
 	}
-	
+
 }

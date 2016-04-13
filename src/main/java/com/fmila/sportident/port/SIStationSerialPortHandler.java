@@ -28,16 +28,18 @@ public final class SIStationSerialPortHandler extends AbstractSISerialPortHandle
 			byte[] requestStationInfo = { (byte) 0x02, (byte) 0x83, (byte) 0x02, (byte) 0x74, (byte) 0x01, (byte) (crc >> 8 & 0xff), (byte) (crc & 0xff), (byte) 0x03 };
 			getPort().write(requestStationInfo);
 		} else if (data.length == 10 && data[1] == -125) {
-			// station info
+			// get station info
 
 			/*
-			 * CN1, CN0 2 bytes stations code number 1...999 0x74 1 byte data
-			 * address in the system memory CPC 1 byte protocol configuration,
-			 * bit mask value xxxxxxx1b extended protocol xxxxxx1xb auto send
+			 * CN1, CN0 2 bytes stations code number 1...999 0x74 1 byte data address in the system memory
+			 * 
+			 * CPC 1 byte protocol configuration, bit mask value xxxxxxx1b extended protocol xxxxxx1xb auto send
 			 * out xxxxx1xxb handshake (only valid for card readout) xxx1xxxxb
 			 * access with password only 1xxxxxxxb read out SI-card after punch
 			 * (only for punch modes; depends on bit 2: auto send out or
-			 * handshake) CRC1, CRC0 2 bytes 16 bit CRC value, computed
+			 * handshake) 
+			 * 
+			 * CRC1, CRC0 2 bytes 16 bit CRC value, computed
 			 * including command byte and LEN (0x04, 0x14 for the request)
 			 */
 
