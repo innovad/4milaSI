@@ -17,11 +17,13 @@ public class DownloadStation {
 	private DownloadSession downloadSession;
 	private String port;
 	private int speed;
+	private Date evtZero;
 	
-	public DownloadStation(String port, int speed, DownloadSession downloadSession) {
+	public DownloadStation(String port, int speed, Date evtZero, DownloadSession downloadSession) {
 		super();
 		this.port = port;
 		this.speed = speed;
+		this.evtZero = evtZero;
 		this.downloadSession = downloadSession;
 	}
 
@@ -57,7 +59,7 @@ public class DownloadStation {
 			}
 
 			// station is initialized, now listen to cards
-			SICardSerialPortHandler cardHandler = new SICardSerialPortHandler(new Date(), downloadSession, serialPort);
+			SICardSerialPortHandler cardHandler = new SICardSerialPortHandler(evtZero, downloadSession, serialPort);
 			serialPortListener.installHandler(cardHandler);
 			
 			downloadSession.waitForCards();

@@ -18,6 +18,15 @@ public final class ByteUtility {
 		System.arraycopy(b, 0, c, a.length, b.length);
 		return c;
 	}
+	
+	public static long getNumberFromBits(byte[] data, int from, int to) {
+		StringBuilder builder = new StringBuilder();
+		for (byte b : data) {
+			String conversion = Long.toUnsignedString(0xff & b, 2);
+			builder.append(("00000000" + conversion).substring(conversion.length()));
+		}
+		return Long.parseUnsignedLong(builder.toString().substring(from,from+to),2);
+	}
 
 	public static long getLongFromBytes(byte b0, byte b1, byte b2, byte b3) {
 		return ((0xff & b0) << 24) | ((0xff & b1) << 16) | ((0xff & b2) << 8) | (0xff & b3);
