@@ -9,7 +9,7 @@ import com.fmila.sportident.serial.internal.RXTXUtility;
 public final class SerialUtility {
 
 	// RXTX is the default for Windows and Linux
-	static SerialLibrary library = SerialLibrary.RXTX;
+	private static SerialLibrary library = SerialLibrary.RXTX;
 
 	public static String[] getPorts() {
 		if (SerialLibrary.RXTX.equals(library)) {
