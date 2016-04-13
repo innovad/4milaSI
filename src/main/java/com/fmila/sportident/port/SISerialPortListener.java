@@ -2,12 +2,12 @@ package com.fmila.sportident.port;
 
 import java.io.IOException;
 
+import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.serial.FMilaSerialEventListener;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
-import com.fmila.sportident.util.CRCCalculator;
-import com.fmila.sportident.util.DownloadException;
+import com.fmila.sportident.util.CRCCalculatorUtility;
 
 public class SISerialPortListener implements FMilaSerialEventListener {
 
@@ -71,7 +71,7 @@ public class SISerialPortListener implements FMilaSerialEventListener {
 			throw new DownloadException("ReadOutError" + ": " + "Message empty or too short");
 		}
 
-		long crcCalculated = CRCCalculator.crc(ByteUtility.getSubarray(data, 1, data.length - 4));
+		long crcCalculated = CRCCalculatorUtility.crc(ByteUtility.getSubarray(data, 1, data.length - 4));
 		long crcRead = ByteUtility.getLongFromBytes(data[data.length - 3], data[data.length - 2]);
 
 		if (!(crcCalculated == crcRead)) {

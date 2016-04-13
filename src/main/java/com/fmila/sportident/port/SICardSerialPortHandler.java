@@ -3,6 +3,7 @@ package com.fmila.sportident.port;
 import java.io.IOException;
 import java.util.Date;
 
+import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.processor.AbstractSICardProcessor;
 import com.fmila.sportident.processor.SICardV5Processor;
@@ -11,7 +12,6 @@ import com.fmila.sportident.processor.SICardV6Processor.MODEL;
 import com.fmila.sportident.processor.SICardV8FamilyProcessor;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
-import com.fmila.sportident.util.DownloadException;
 
 public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 

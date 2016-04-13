@@ -1,11 +1,11 @@
 package com.fmila.sportident.util;
 
-public final class CRCCalculator {
+public final class CRCCalculatorUtility {
 	
 	private static final int POLY = 0x8005;
 	private static final int BITF = 0x8000;
 
-	private CRCCalculator() {
+	private CRCCalculatorUtility() {
 	}
 
 	public static int crc(byte[] buffer) {

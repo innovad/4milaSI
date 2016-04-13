@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * @author amo
  */
-public class CRCCalculatorTest {
+public class CRCCalculatorUtilityTest {
 
   @Test
   public void testCRC() {
@@ -22,7 +22,7 @@ public class CRCCalculatorTest {
     };
 
     // Should give 2C12 (see message above)
-    Assert.assertEquals("2c12", Integer.toString(CRCCalculator.crc(testData), 16));
+    Assert.assertEquals("2c12", Integer.toString(CRCCalculatorUtility.crc(testData), 16));
 
   }
 

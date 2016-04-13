@@ -8,8 +8,7 @@ import com.fmila.sportident.port.SISerialPortListener;
 import com.fmila.sportident.port.SIStationSerialPortHandler;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.serial.SerialUtility;
-import com.fmila.sportident.util.CRCCalculator;
-import com.fmila.sportident.util.DownloadException;
+import com.fmila.sportident.util.CRCCalculatorUtility;
 
 
 public class DownloadStation {
@@ -42,7 +41,7 @@ public class DownloadStation {
 			serialPort.addEventListener(serialPortListener);
 
 			// request direct communication with readout station
-			int crc = CRCCalculator.crc(new byte[] { (byte) 0xF0, (byte) 0x01, (byte) 0x4D });
+			int crc = CRCCalculatorUtility.crc(new byte[] { (byte) 0xF0, (byte) 0x01, (byte) 0x4D });
 			byte[] message = { (byte) 0x02, (byte) 0xF0, (byte) 0x01, (byte) 0x4D, (byte) (crc >> 8 & 0xff), (byte) (crc & 0xff), (byte) 0x03 };
 			serialPort.write(message);
 

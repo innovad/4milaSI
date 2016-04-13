@@ -2,11 +2,11 @@ package com.fmila.sportident.port;
 
 import java.io.IOException;
 
+import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
-import com.fmila.sportident.util.CRCCalculator;
-import com.fmila.sportident.util.DownloadException;
+import com.fmila.sportident.util.CRCCalculatorUtility;
 
 public final class SIStationSerialPortHandler extends AbstractSISerialPortHandler {
 
@@ -24,7 +24,7 @@ public final class SIStationSerialPortHandler extends AbstractSISerialPortHandle
 		if (data.length == 9 && (data[1] == -16) && (data[5] == 77)) {
 			// complete answer is [2, -16, 3, 2, 69, 77, -128, -118, 3]
 			// request station info
-			int crc = CRCCalculator.crc(new byte[] { (byte) 0x83, (byte) 0x02, (byte) 0x74, (byte) 0x01 });
+			int crc = CRCCalculatorUtility.crc(new byte[] { (byte) 0x83, (byte) 0x02, (byte) 0x74, (byte) 0x01 });
 			byte[] requestStationInfo = { (byte) 0x02, (byte) 0x83, (byte) 0x02, (byte) 0x74, (byte) 0x01, (byte) (crc >> 8 & 0xff), (byte) (crc & 0xff), (byte) 0x03 };
 			getPort().write(requestStationInfo);
 		} else if (data.length == 10 && data[1] == -125) {

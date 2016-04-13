@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.DownloadSession;
+import com.fmila.sportident.SICardType;
 import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
-import com.fmila.sportident.util.DownloadException;
-import com.fmila.sportident.util.ECardType;
 import com.fmila.sportident.util.SICardUtility;
 
 public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
@@ -29,8 +29,8 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 
 	@Override
 	protected byte[] getRequestDataCommand(int messageNr) throws DownloadException {
-		if (SICardUtility.getType(getECardNo()) == ECardType.SICARD8 ||
-				SICardUtility.getType(getECardNo()) == ECardType.SICARD9) {
+		if (SICardUtility.getType(getECardNo()) == SICardType.SICARD8 ||
+				SICardUtility.getType(getECardNo()) == SICardType.SICARD9) {
 			if (messageNr == 1) {
 				return COMMAND_REQUEST_DATAV8_0;
 			}
@@ -50,13 +50,13 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 
 	@Override
 	public int getNumberOfDataMessages() throws DownloadException {
-		if (SICardUtility.getType(getECardNo()) == ECardType.SICARD8) {
+		if (SICardUtility.getType(getECardNo()) == SICardType.SICARD8) {
 			return 2;
-		} else if (SICardUtility.getType(getECardNo()) == ECardType.SICARD9) {
+		} else if (SICardUtility.getType(getECardNo()) == SICardType.SICARD9) {
 			return 2;
-		} else if (SICardUtility.getType(getECardNo()) == ECardType.pCARD) {
+		} else if (SICardUtility.getType(getECardNo()) == SICardType.pCARD) {
 			return 2;
-		} else if (SICardUtility.getType(getECardNo()) == ECardType.tCARD) {
+		} else if (SICardUtility.getType(getECardNo()) == SICardType.tCARD) {
 			return 2;
 		}
 		return 5;

@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.DownloadSession;
 import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
-import com.fmila.sportident.util.DownloadException;
 
 public abstract class AbstractSICardProcessor {
 

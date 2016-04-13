@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.fmila.sportident.DownloadException;
+import com.fmila.sportident.SICardType;
 import com.fmila.sportident.bean.Punch;
 
 public final class SICardUtility {
@@ -122,7 +124,7 @@ public final class SICardUtility {
 		}
 	}
 
-	public static ECardType getType(String eCardNo) throws DownloadException {
+	public static SICardType getType(String eCardNo) throws DownloadException {
 
 		// SI-Card5 SI-Card6 SI-Card6* SI-Card8 SI-Card9 pCard tCard
 		// (upgrade to SI-6* possible)
@@ -138,29 +140,29 @@ public final class SICardUtility {
 		}
 
 		if (eCardId >= 0 && eCardId <= 499999) {
-			return ECardType.SICARD5;
+			return SICardType.SICARD5;
 		} else if (eCardId >= 500000 && eCardId <= 999999) {
-			return ECardType.SICARD6;
+			return SICardType.SICARD6;
 		}
 		// special case: SI Cards for OL WM 2003
 		else if (eCardId >= 2003000 && eCardId <= 2003799) {
-			return ECardType.SICARD6;
+			return SICardType.SICARD6;
 		} else if (eCardId >= 16711680 && eCardId <= 16777215) {
-			return ECardType.SICARD6Star;
+			return SICardType.SICARD6Star;
 		} else if (eCardId >= 2000000 && eCardId <= 2999999) {
-			return ECardType.SICARD8;
+			return SICardType.SICARD8;
 		} else if (eCardId >= 1000000 && eCardId <= 1999999) {
-			return ECardType.SICARD9;
+			return SICardType.SICARD9;
 		} else if (eCardId >= 4000000 && eCardId <= 4999999) {
-			return ECardType.pCARD;
+			return SICardType.pCARD;
 		} else if (eCardId >= 6000000 && eCardId <= 6999999) {
-			return ECardType.tCARD;
+			return SICardType.tCARD;
 		} else if (eCardId >= 7000001 && eCardId <= 7999999) {
-			return ECardType.SICARD10;
+			return SICardType.SICARD10;
 		} else if (eCardId >= 8000001 && eCardId <= 8999999) {
-			return ECardType.SIAC1;
+			return SICardType.SIAC1;
 		} else if (eCardId >= 9000001 && eCardId <= 9999999) {
-			return ECardType.SICARD11;
+			return SICardType.SICARD11;
 		} else {
 			throw new DownloadException("UnknownSICardType" + ": " + eCardNo);
 		}
