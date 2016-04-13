@@ -12,14 +12,17 @@ public class FMilaSerialTestPort implements FMilaSerialPort {
 
   @Override
   public void write(byte... data) throws IOException {
+	  // nop - testing only
   }
 
   @Override
   public void close() {
+	  // nop - testing only
   }
 
   @Override
   public void addEventListener(FMilaSerialEventListener listener) {
+	  // nop - testing only
   }
 
 }
