@@ -8,10 +8,10 @@ import com.fmila.sportident.bean.Punch;
 
 public final class SICardUtility {
 
+	public static final long INVALID_TIME = 61166000L;
+	
 	private SICardUtility() {
 	}
-
-	public static final long INVALID_TIME = 61166000L;
 
 	/**
 	 * 8 byte punching record
