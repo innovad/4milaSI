@@ -41,10 +41,21 @@ public final class SICardUtility {
 		if (punchTime != null) {
 			punchTime += ByteUtility.getNumberFromBits(bytes, index * 8 + 7, 8);
 		}
+		
+		// calculate date
+		long month = ByteUtility.getNumberFromBits(bytes, index * 8 + 30, 4) - 1; // java months start with 0
+		long day = ByteUtility.getNumberFromBits(bytes, index * 8 + 34, 5);
+		GregorianCalendar greg = new GregorianCalendar();
+		greg.setTime(evtZero == null ? new Date() : evtZero);
+		long year = greg.get(Calendar.YEAR);
+		if (greg.get(Calendar.MONTH) < month && greg.get(Calendar.DAY_OF_MONTH) < day) {
+			year = year - 1;
+		}
+		greg.set((int)year, (int)month, (int)day);
 
 		punch.setSortCode(sortcode);
 		punch.setControlNo(Long.toString(code));
-		punch.setRawTime(alignToEvtZeroTime(punchTime, evtZero));
+		punch.setRawTime(alignToEvtZeroTime(punchTime, greg.getTime(), evtZero));
 
 		if (punchTime != null) {
 			System.out.println(code);
@@ -82,7 +93,7 @@ public final class SICardUtility {
 
 		punch.setSortCode(sortcode);
 		punch.setControlNo(Long.toString(code));
-		punch.setRawTime(alignToEvtZeroTime(punchTime, evtZero));
+		punch.setRawTime(alignToEvtZeroTime(punchTime, null, evtZero));
 
 		return punch;
 	}
@@ -102,7 +113,7 @@ public final class SICardUtility {
 	}
 
 	private static Long alignToEvtZeroTimeV5(Long time, Date evtZero) {
-		time = SICardUtility.alignToEvtZeroTime(time, evtZero);
+		time = alignToEvtZeroTime(time, null, evtZero);
 		if (time != null && time < 0) {
 			// siV5 is 12h only
 			return time + 12 * 60 * 60 * 1000; // 12h
@@ -111,13 +122,15 @@ public final class SICardUtility {
 		}
 	}
 
-	private static Long alignToEvtZeroTime(Long time, Date evtZero) {
+	private static Long alignToEvtZeroTime(Long time, Date evtPunch, Date evtZero) {
 		if (time == null) {
 			return null;
 		}
 		if (evtZero == null) {
-			return DateUtility.addMilliSeconds(truncDate(new Date()), time).getTime();
+			// set absolute date/time
+			return DateUtility.addMilliSeconds(truncDate(evtPunch == null ? new Date() : evtPunch), time).getTime();
 		} else {
+			// set relative date/time to evtZero
 			Long evtZeroHoursMinsSecsInMilliSecs = getDateDifferenceInMilliSeconds(truncDate(evtZero), evtZero);
 			return time - evtZeroHoursMinsSecsInMilliSecs;
 		}
