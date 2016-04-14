@@ -74,7 +74,7 @@ public class SISerialPortListener implements FMilaSerialEventListener {
 		long crcCalculated = CRCCalculatorUtility.crc(ByteUtility.getSubarray(data, 1, data.length - 4));
 		long crcRead = ByteUtility.getLongFromBytes(data[data.length - 3], data[data.length - 2]);
 
-		if (!(crcCalculated == crcRead)) {
+		if (crcCalculated != crcRead) {
 			showInfoWindowError();
 			throw new DownloadException("ReadOutError" + ": " + "CRC Error " +
 					ByteUtility.dumpBytes(new byte[] { new Long(crcCalculated).byteValue() }) + " != " +
