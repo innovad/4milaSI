@@ -11,7 +11,7 @@ import com.fmila.sportident.bean.Punch;
 public final class SICardUtility {
 
 	public static final long INVALID_TIME = 61166000L;
-	
+
 	private SICardUtility() {
 	}
 
@@ -43,7 +43,7 @@ public final class SICardUtility {
 		if (punchTime != null) {
 			punchTime += ByteUtility.getNumberFromBits(bytes, index * 8 + 7, 8);
 		}
-		
+
 		// calculate date
 		long month = ByteUtility.getNumberFromBits(bytes, index * 8 + 30, 4) - 1; // java months start with 0
 		long day = ByteUtility.getNumberFromBits(bytes, index * 8 + 34, 5);
@@ -53,7 +53,7 @@ public final class SICardUtility {
 		if (greg.get(Calendar.MONTH) < month && greg.get(Calendar.DAY_OF_MONTH) < day) {
 			year = year - 1;
 		}
-		greg.set((int)year, (int)month, (int)day);
+		greg.set((int) year, (int) month, (int) day);
 
 		punch.setSortCode(sortcode);
 		punch.setControlNo(Long.toString(code));
@@ -85,8 +85,7 @@ public final class SICardUtility {
 
 		long byte0 = ByteUtility.getLongFromByte(bytes[index]); // PTD
 		long code = ByteUtility.getLongFromByte(bytes[index + 1]); // CN
-		Long punchTime = ByteUtility.getLongFromBytes(bytes[index + 2], bytes[index + 3]) * 1000L; // PTH,
-																									// PTL
+		Long punchTime = ByteUtility.getLongFromBytes(bytes[index + 2], bytes[index + 3]) * 1000L; // PTH, PTL
 		if (punchTime == INVALID_TIME) {
 			punchTime = null;
 		} else if ((byte0 & 1) != 0) { // PTD am/pm (am=0, pm=1)
@@ -104,24 +103,22 @@ public final class SICardUtility {
 		Long time;
 		long code = ByteUtility.getLongFromByte(data[pos]);
 		time = ByteUtility.getLongFromBytes(data[1 + pos], data[2 + pos]) * 1000L;
-		if (time == SICardUtility.INVALID_TIME) {
+		if (time == INVALID_TIME) {
 			time = null;
 		}
 		Punch punch = new Punch();
+
+		Long rawTime = DateTimeUtility.alignDateOfTime(time, null, evtZero);
+		if (rawTime != null && rawTime < 0) {
+			// siV5 is 12h only
+			rawTime = rawTime + 12 * 60 * 60 * 1000; // 12h
+		}
+
 		punch.setControlNo("" + code);
 		punch.setSortCode(Long.valueOf(sortcode));
-		punch.setRawTime(alignToEvtZeroTimeV5(time, evtZero));
-		return punch;
-	}
+		punch.setRawTime(rawTime);
 
-	private static Long alignToEvtZeroTimeV5(Long time, Date evtZero) {
-		time = DateTimeUtility.alignDateOfTime(time, null, evtZero);
-		if (time != null && time < 0) {
-			// siV5 is 12h only
-			return time + 12 * 60 * 60 * 1000; // 12h
-		} else {
-			return time;
-		}
+		return punch;
 	}
 
 	public static SICardType getType(String eCardNo) throws DownloadException {

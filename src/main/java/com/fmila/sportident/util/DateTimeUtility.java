@@ -63,6 +63,7 @@ public class DateTimeUtility {
 			return DateTimeUtility.addMilliSeconds(truncDate(dateFromCard == null ? new Date() : dateFromCard), millsecondsFromCard).getTime();
 		} else {
 			// set relative time to given zero date/time
+			// TODO could analyze dateFromCard here as well
 			Long evtZeroHoursMinsSecsInMilliSecs = getDateDifferenceInMilliSeconds(truncDate(givenZeroDate), givenZeroDate);
 			return millsecondsFromCard - evtZeroHoursMinsSecsInMilliSecs;
 		}
