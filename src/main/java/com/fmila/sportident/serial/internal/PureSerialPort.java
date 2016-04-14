@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.fmila.sportident.serial.FMilaSerialEventListener;
 import com.fmila.sportident.serial.FMilaSerialPort;
@@ -16,6 +18,8 @@ import purejavacomm.SerialPortEventListener;
  * 
  */
 public class PureSerialPort implements FMilaSerialPort {
+
+	private final static Logger LOGGER = Logger.getLogger(PureSerialPort.class.getName());
 
 	private final SerialPort serialPort;
 	private final ByteArrayOutputStream baos;
@@ -42,11 +46,10 @@ public class PureSerialPort implements FMilaSerialPort {
 		try {
 			serialPort.removeEventListener();
 			serialPort.close();
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 			// do not print exceptions if port was already closed (-1)
-			if (!(e instanceof IllegalStateException)) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			LOGGER.log(Level.WARNING, "Error closing PureSerialPort", e);
 		}
 	}
 
@@ -82,14 +85,14 @@ public class PureSerialPort implements FMilaSerialPort {
 					default: // nop
 					}
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					throw new RuntimeException("Error adding event listener", e1);
 				}
 			}
 		};
 		try {
 			serialPort.addEventListener(eventListener);
 		} catch (TooManyListenersException e) {
-			e.printStackTrace();
+			throw new RuntimeException("Error adding event listener", e);
 		}
 	}
 
