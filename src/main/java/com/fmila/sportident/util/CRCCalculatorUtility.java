@@ -10,8 +10,10 @@ public final class CRCCalculatorUtility {
 
 	public static int crc(byte[] buffer) {
 		int count = buffer.length;
-		int i, j;
-		int tmp, val; // 16 Bit
+		int i;
+		int j;
+		int tmp; // 16 Bit
+		int val; // 16 Bit
 		int ptr = 0;
 
 		tmp = (short) (buffer[ptr++] << 8 | (buffer[ptr++] & 0xFF));
