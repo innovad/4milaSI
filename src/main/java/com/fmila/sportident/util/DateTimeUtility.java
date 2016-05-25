@@ -64,13 +64,14 @@ public class DateTimeUtility {
 			return DateTimeUtility.addMilliSeconds(truncDate(baseDateFromCard == null ? new Date() : baseDateFromCard), millsecondsFromCard).getTime();
 		} else {
 			// set relative time to given zero date/time
+			long baseDateCardDifference = 0;
 			if (baseDateFromCard != null) {
 				// if days from dateFromCard != days from evtZero => add difference
 				long daysDifference = (truncDate(baseDateFromCard).getTime() - truncDate(givenZeroDate).getTime()) / 86400 / 1000;
-				millsecondsFromCard += daysDifference * 86400 * 1000;
+				baseDateCardDifference = daysDifference * 86400 * 1000;
 			}
 			Long evtZeroHoursMinsSecsInMilliSecs = getDateDifferenceInMilliSeconds(truncDate(givenZeroDate), givenZeroDate);
-			return millsecondsFromCard - evtZeroHoursMinsSecsInMilliSecs;
+			return millsecondsFromCard + baseDateCardDifference - evtZeroHoursMinsSecsInMilliSecs;
 		}
 	}
 
