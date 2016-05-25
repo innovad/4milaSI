@@ -6,9 +6,9 @@ public final class ByteUtility {
 	}
 
 	public static byte[] getSubarray(byte[] array, int offset, int length) {
-		length = Math.min(length, array.length - offset);
-		byte[] result = new byte[length];
-		System.arraycopy(array, offset, result, 0, length);
+		int targetLength = Math.min(length, array.length - offset);
+		byte[] result = new byte[targetLength];
+		System.arraycopy(array, offset, result, 0, targetLength);
 		return result;
 	}
 
