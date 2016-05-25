@@ -7,6 +7,7 @@ import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.fmila.sportident.DownloadStationException;
 import com.fmila.sportident.serial.FMilaSerialEventListener;
 import com.fmila.sportident.serial.FMilaSerialPort;
 
@@ -85,14 +86,14 @@ public class PureSerialPort implements FMilaSerialPort {
 					default: // nop
 					}
 				} catch (Exception e1) {
-					throw new RuntimeException("Error adding event listener", e1);
+					throw new DownloadStationException("Error adding event listener", e1);
 				}
 			}
 		};
 		try {
 			serialPort.addEventListener(eventListener);
 		} catch (TooManyListenersException e) {
-			throw new RuntimeException("Error adding event listener", e);
+			throw new DownloadStationException("Error adding event listener", e);
 		}
 	}
 
