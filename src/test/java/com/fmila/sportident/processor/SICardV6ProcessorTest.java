@@ -129,7 +129,7 @@ public class SICardV6ProcessorTest {
     Assert.assertEquals("Verify E-Card Number", "772103", processor.getECardNo());
 
     Assert.assertNull(processor.getCheckTime());
-    Assert.assertEquals(-31672000, processor.getClearTime().longValue());
+    Assert.assertEquals(-31672000 - 86400000 - 86400000, processor.getClearTime().longValue());
     Assert.assertNull(processor.getStartTime());
     Assert.assertNull(processor.getFinishTime());
 

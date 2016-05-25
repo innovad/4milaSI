@@ -27,6 +27,11 @@ public final class ByteUtility {
 		}
 		return Long.parseUnsignedLong(builder.toString().substring(from,from+to),2);
 	}
+	
+	public static int getBit(byte b, int position)
+	{
+	   return (b >> position) & 1;
+	}
 
 	public static long getLongFromBytes(byte b0, byte b1, byte b2, byte b3) {
 		return ((0xff & b0) << 24) | ((0xff & b1) << 16) | ((0xff & b2) << 8) | (0xff & b3);

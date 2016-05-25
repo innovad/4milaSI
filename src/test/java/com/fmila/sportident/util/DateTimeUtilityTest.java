@@ -56,5 +56,23 @@ public class DateTimeUtilityTest {
 		Long result = DateTimeUtility.alignDateOfTime(21632001L, null, DateTimeUtility.parse("21-03-1977 06:00:00.000", "dd-MM-yyyy HH:mm:ss.SSS"));
 		assertEquals(32001L, result.longValue());
 	}
+	
+	@Test
+	public void testAlignDateOfTime6() throws Exception {
+		Long result = DateTimeUtility.alignDateOfTime(32001L, DateTimeUtility.parse("21-03-1977", "dd-MM-yyyy"), DateTimeUtility.parse("21-03-1977", "dd-MM-yyyy"));
+		assertEquals(32001L, result.longValue());
+	}
+	
+	@Test
+	public void testAlignDateOfTime7() throws Exception {
+		Long result = DateTimeUtility.alignDateOfTime(32001L, DateTimeUtility.parse("20-03-1977", "dd-MM-yyyy"), DateTimeUtility.parse("21-03-1977", "dd-MM-yyyy"));
+		assertEquals(-86400000L + 32001L, result.longValue());
+	}
+	
+	@Test
+	public void testAlignDateOfTime8() throws Exception {
+		Long result = DateTimeUtility.alignDateOfTime(32001L, DateTimeUtility.parse("22-03-1977", "dd-MM-yyyy"), DateTimeUtility.parse("21-03-1977", "dd-MM-yyyy"));
+		assertEquals(86400000L + 32001L, result.longValue());
+	}
 
 }

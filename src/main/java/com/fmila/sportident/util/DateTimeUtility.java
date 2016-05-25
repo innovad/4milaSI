@@ -54,16 +54,21 @@ public class DateTimeUtility {
 		return resultDate;
 	}
 
-	public static Long alignDateOfTime(Long millsecondsFromCard, Date dateFromCard, Date givenZeroDate) {
+	public static Long alignDateOfTime(Long millsecondsFromCard, Date baseDateFromCard, Date givenZeroDate) {
 		if (millsecondsFromCard == null) {
 			return null;
 		}
+
 		if (givenZeroDate == null) {
 			// try to set absolute date/time, either from sysdate or from card
-			return DateTimeUtility.addMilliSeconds(truncDate(dateFromCard == null ? new Date() : dateFromCard), millsecondsFromCard).getTime();
+			return DateTimeUtility.addMilliSeconds(truncDate(baseDateFromCard == null ? new Date() : baseDateFromCard), millsecondsFromCard).getTime();
 		} else {
 			// set relative time to given zero date/time
-			// TODO could analyze dateFromCard here as well
+			if (baseDateFromCard != null) {
+				// if days from dateFromCard != days from evtZero => add difference
+				long daysDifference = (truncDate(baseDateFromCard).getTime() - truncDate(givenZeroDate).getTime()) / 86400 / 1000;
+				millsecondsFromCard += daysDifference * 86400 * 1000;
+			}
 			Long evtZeroHoursMinsSecsInMilliSecs = getDateDifferenceInMilliSeconds(truncDate(givenZeroDate), givenZeroDate);
 			return millsecondsFromCard - evtZeroHoursMinsSecsInMilliSecs;
 		}
