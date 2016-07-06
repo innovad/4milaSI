@@ -15,7 +15,7 @@ import gnu.io.SerialPortEventListener;
 /**
  * 
  */
-public class RXTXSerialPort implements FMilaSerialPort {
+public class RXTXSerialPort extends AbstractFMilaSerialPort implements FMilaSerialPort {
 
 	private final SerialPort serialPort;
 	private final ByteArrayOutputStream baos;

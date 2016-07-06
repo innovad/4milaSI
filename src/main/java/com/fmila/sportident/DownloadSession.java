@@ -8,7 +8,9 @@ public interface DownloadSession {
 	
 	public boolean handleCardInserted(String cardNo);
 	
-	public boolean handleData(String cardNo, List<Punch> controlData);
+	public boolean handleData(String stationNo, String cardNo, List<Punch> controlData);
+	
+	public Boolean enableSiacAirMode();
 
 	public void handleCardRemoved();
 

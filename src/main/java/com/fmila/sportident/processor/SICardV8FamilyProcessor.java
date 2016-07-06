@@ -1,5 +1,6 @@
 package com.fmila.sportident.processor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,9 +15,9 @@ import com.fmila.sportident.util.SICardUtility;
 
 public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 
-	private static final byte[] COMMAND_REQUEST_DATAV8_0 = new byte[] { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x00, (byte) 0xe2, (byte) 0x09, (byte) 0x03 };
-	private static final byte[] COMMAND_REQUEST_DATAV8_1 = new byte[] { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x01, (byte) 0xe3, (byte) 0x09, (byte) 0x03 };
-	private static final byte[] COMMAND_REQUEST_DATAV10_04567 = new byte[] { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x08, (byte) 0xea, (byte) 0x09, (byte) 0x03 };
+	private static final byte[] COMMAND_REQUEST_DATAV8_0 = { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x00, (byte) 0xe2, (byte) 0x09, (byte) 0x03 };
+	private static final byte[] COMMAND_REQUEST_DATAV8_1 = { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x01, (byte) 0xe3, (byte) 0x09, (byte) 0x03 };
+	private static final byte[] COMMAND_REQUEST_DATAV10_04567 = { (byte) 0x02, (byte) 0xef, (byte) 0x01, (byte) 0x08, (byte) 0xea, (byte) 0x09, (byte) 0x03 };
 
 	public SICardV8FamilyProcessor(FMilaSerialPort port, Date currentEvtZero, DownloadSession session) {
 		super(port, currentEvtZero, session);
@@ -122,6 +123,21 @@ public class SICardV8FamilyProcessor extends AbstractSICardProcessor {
 		// same punch structure as V6
 		Punch punch = SICardUtility.readV6Punch(data, 8, 0, getCurrentEvtZero());
 		return punch.getRawTime();
+	}
+
+	@Override
+	protected byte[] getSiacAirModeCommand(boolean enabled) throws IOException {
+		byte[] command = null;
+		if (SICardType.SIAC1.equals(SICardUtility.getType(getECardNo()))) {
+			if (enabled) {
+				command = new byte[] { (byte) 0xFF, (byte) 0x02, (byte) 0xEA, (byte) 0x05, (byte) 0x7E, (byte) 0x07, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x29, (byte) 0x04, (byte) 0x03 };
+				System.out.println("enable SIAC/Air");
+			} else {
+				command = new byte[] { (byte) 0xFF, (byte) 0x02, (byte) 0xEA, (byte) 0x05, (byte) 0x7E, (byte) 0x06, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xA9, (byte) 0x13, (byte) 0x03 };
+				System.out.println("disable SIAC/Air");
+			}
+		} 
+		return command;
 	}
 
 }

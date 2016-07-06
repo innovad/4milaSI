@@ -51,6 +51,7 @@ public final class SIStationSerialPortHandler extends AbstractSISerialPortHandle
 			boolean handShake = (cpc & (1 << 2)) != 0;
 			boolean password = (cpc & (1 << 4)) != 0;
 			boolean readOutAfterPunch = (cpc & (1 << 7)) != 0;
+			setStationNo(Long.toString(stationNr));
 			System.out.println("Checking SI-Station, Nr: " + stationNr + ", Extended Protocol: " + extendedProtocol + ", Password: " + password + ", Read-Out After Punch: " + readOutAfterPunch);
 
 			if (!extendedProtocol) {

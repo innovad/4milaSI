@@ -42,9 +42,9 @@ public abstract class AbstractSICardProcessor {
 		long cardNr = readSICardNrOfInsertedCard(data);
 		String cardNo = String.valueOf(cardNr);
 		setECardNo(cardNo);
-		
+
 		boolean requestMoreData = session.handleCardInserted(cardNo);
-		
+
 		if (requestMoreData) {
 			// TODO
 			System.out.println("RequestECardData" + ": " + eCardNo);
@@ -77,10 +77,19 @@ public abstract class AbstractSICardProcessor {
 			setCheckTime(readCheckTime(data));
 			setStartTime(readStartTime(data));
 			setFinishTime(readFinishTime(data));
-			
-			boolean remove = session.handleData(getECardNo(), controlData);
+
+			boolean remove = session.handleData(port.getStationNo(), getECardNo(), controlData);
 			if (remove) {
-				removeSICard();
+				if (session.enableSiacAirMode() != null) {
+					byte[] command = getSiacAirModeCommand(session.enableSiacAirMode());
+					if (command != null) {
+						port.write(command);
+					} else {
+						removeSICard();
+					}
+				} else {
+					removeSICard();
+				}
 			}
 		}
 		// request next block
@@ -125,6 +134,12 @@ public abstract class AbstractSICardProcessor {
 	public abstract int getNumberOfDataMessages() throws DownloadException;
 
 	protected abstract List<Punch> readControlsFromData(byte[] data) throws DownloadException;
+	
+	public void handleSiacAirModeAnswer(byte[] data) throws IOException {
+		this.removeSICard();
+	}
+
+	protected abstract byte[] getSiacAirModeCommand(boolean enabled) throws IOException;
 
 	public String getECardNo() {
 		return this.eCardNo;

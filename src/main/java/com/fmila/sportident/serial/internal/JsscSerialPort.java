@@ -13,7 +13,7 @@ import jssc.SerialPortException;
 /**
  * 
  */
-public class JsscSerialPort implements FMilaSerialPort {
+public class JsscSerialPort extends AbstractFMilaSerialPort implements FMilaSerialPort {
 
 	private final SerialPort serialPort;
 

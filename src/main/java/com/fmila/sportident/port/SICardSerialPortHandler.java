@@ -60,6 +60,8 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 		} else if (data.length >= LENGTH_DATA_V6_8_9 && ((data[LOCATION_COMMAND] & 0xff) == DATA_V6 ||
 				(data[LOCATION_COMMAND] & 0xff) == DATA_V8_9)) {
 			handleV6DataBlock(data); // handle V6, V6*, V8, V9 data block
+		} else if (data.length == 9) {
+			currentSICard.handleSiacAirModeAnswer(data);
 		} else {
 			// unknown
 			throw new DownloadException("Unsupported Operation, length " + data.length + ", content: " + ByteUtility.dumpBytes(data));

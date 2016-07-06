@@ -1,5 +1,6 @@
 package com.fmila.sportident.processor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -147,6 +148,12 @@ public class SICardV6Processor extends AbstractSICardProcessor {
 	protected Long readStartTime(byte[] data) throws DownloadException {
 		Punch punch = SICardUtility.readV6Punch(data, 24, 0, getCurrentEvtZero());
 		return punch.getRawTime();
+	}
+	
+	@Override
+	protected byte[] getSiacAirModeCommand(boolean enabled) throws IOException {
+		System.out.println("SIAC/Air not supported on SICardV6");
+		return null;
 	}
 
 }

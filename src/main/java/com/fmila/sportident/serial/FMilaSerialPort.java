@@ -12,5 +12,9 @@ public interface FMilaSerialPort {
 	public void close();
 
 	public void addEventListener(final FMilaSerialEventListener listener);
+	
+	public String getStationNo();
+	
+	public void setStationNo(String stationNo);
 
 }

@@ -25,5 +25,9 @@ public abstract class AbstractSISerialPortHandler {
 	public DownloadSession getDownloadSession() {
 		return downloadSession;
 	}
+	
+	protected void setStationNo(String stationNo) {
+		port.setStationNo(stationNo);
+	}
 
 }

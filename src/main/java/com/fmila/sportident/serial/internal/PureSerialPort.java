@@ -18,7 +18,7 @@ import purejavacomm.SerialPortEventListener;
 /**
  * 
  */
-public class PureSerialPort implements FMilaSerialPort {
+public class PureSerialPort extends AbstractFMilaSerialPort implements FMilaSerialPort {
 
 	private final static Logger LOGGER = Logger.getLogger(PureSerialPort.class.getName());
 
