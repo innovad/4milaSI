@@ -32,6 +32,7 @@ public class FMilaSerialTestPort implements FMilaSerialPort {
 
 	@Override
 	public void setStationNo(String stationNo) {
+		// nop - testing only
 	}
 
 }
