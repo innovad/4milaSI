@@ -28,7 +28,9 @@ public class SISerialPortListener implements FMilaSerialEventListener {
 	public void serialEvent(byte[] data) throws IOException {
 		System.out.println("ActivityAtECardStation");
 		try {
-			if (data.length > 137 && data.length % 137 == 0) {
+			if (data.length > 0 && ((data[1] & 0xff) == 0xD3)) {
+				// auto send data
+			} else if (data.length > 137 && data.length % 137 == 0) {
 				// message size 137 or multiples
 				for (int k = 0; k < data.length; k = k + 137) {
 					checkCRC(ByteUtility.getSubarray(data, k, 137));

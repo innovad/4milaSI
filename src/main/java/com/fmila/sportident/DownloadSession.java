@@ -10,6 +10,8 @@ public interface DownloadSession {
 	
 	public boolean handleData(String stationNo, String cardNo, List<Punch> controlData);
 	
+	public void handleAutoSend(String cardNo, String controlNo, Punch punch);
+	
 	public Boolean enableSiacAirMode();
 
 	public void handleCardRemoved();

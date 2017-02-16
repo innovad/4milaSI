@@ -57,10 +57,10 @@ public final class SIStationSerialPortHandler extends AbstractSISerialPortHandle
 			if (!extendedProtocol) {
 				throw new DownloadException("Extended Protocol required. Please set SI Station to extended Protocol.");
 			}
-			if (autoSend) {
+			if (handShake && autoSend) {
 				throw new DownloadException("AutoSend not supported. Please turn off AutoSend on SI Station.");
 			}
-			if (!handShake) {
+			if (!handShake && !autoSend) {
 				throw new DownloadException("Handshake required. Please turn on Handshake on SI Station.");
 			}
 

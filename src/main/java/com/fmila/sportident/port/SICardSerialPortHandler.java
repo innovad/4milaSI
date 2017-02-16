@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.fmila.sportident.DownloadException;
 import com.fmila.sportident.DownloadSession;
+import com.fmila.sportident.bean.Punch;
 import com.fmila.sportident.processor.AbstractSICardProcessor;
 import com.fmila.sportident.processor.SICardV5Processor;
 import com.fmila.sportident.processor.SICardV6Processor;
@@ -12,6 +13,7 @@ import com.fmila.sportident.processor.SICardV6Processor.MODEL;
 import com.fmila.sportident.processor.SICardV8FamilyProcessor;
 import com.fmila.sportident.serial.FMilaSerialPort;
 import com.fmila.sportident.util.ByteUtility;
+import com.fmila.sportident.util.SICardUtility;
 
 public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 
@@ -62,6 +64,14 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 			handleV6DataBlock(data); // handle V6, V6*, V8, V9 data block
 		} else if (data.length == 9) {
 			currentSICard.handleSiacAirModeAnswer(data);
+		} else if (data.length > 0 && ((data[1] & 0xff) == 0xD3)) {
+			// auto send
+			Long controlNo = ByteUtility.getLongFromBytes(data[3], data[4]);
+			Long cardNo = ByteUtility.getLongFromBytes(data[5], data[6], data[7], data[8]);
+			// auto send punch is very similar to V6 punch
+			Punch punch = SICardUtility.readV6Punch(new byte[] { data[9], data[0], data[10], data[11] }, 0, 1, currentEvtZero);
+			punch.setControlNo(controlNo.toString()); // control no is not sent in punch data
+			getDownloadSession().handleAutoSend(cardNo.toString(), controlNo.toString(), punch);
 		} else {
 			// unknown
 			throw new DownloadException("Unsupported Operation, length " + data.length + ", content: " + ByteUtility.dumpBytes(data));
