@@ -64,7 +64,7 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 			handleV6DataBlock(data); // handle V6, V6*, V8, V9 data block
 		} else if (data.length == 9) {
 			currentSICard.handleSiacAirModeAnswer(data);
-		} else if (data.length > 0 && ((data[1] & 0xff) == 0xD3)) {
+		} else if (data.length > 1 && ((data[1] & 0xff) == 0xD3)) {
 			// auto send
 			Long controlNo = ByteUtility.getLongFromBytes(data[3], data[4]);
 			Long cardNo = ByteUtility.getLongFromBytes(data[5], data[6], data[7], data[8]);
