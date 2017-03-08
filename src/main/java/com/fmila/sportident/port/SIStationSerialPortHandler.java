@@ -71,6 +71,9 @@ public final class SIStationSerialPortHandler extends AbstractSISerialPortHandle
 			}
 
 			System.out.println("ECardStationReady" + ": " + String.valueOf(stationNr));
+		} else if (data.length == 10) {
+			isInitialized = true;
+			System.out.println("SRRDongleReady");
 		} else {
 			// unknown
 			throw new DownloadException("Unsupported Operation: " + ByteUtility.dumpBytes(data));

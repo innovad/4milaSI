@@ -56,7 +56,7 @@ public class DownloadStation {
 			if (!stationHandler.isInitialized()) {
 				throw new DownloadException("Timeout occured, failed initializing station");
 			}
-
+			
 			// station is initialized, now listen to cards
 			SICardSerialPortHandler cardHandler = new SICardSerialPortHandler(evtZero, downloadSession, serialPort);
 			serialPortListener.installHandler(cardHandler);

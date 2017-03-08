@@ -67,9 +67,18 @@ public final class SICardSerialPortHandler extends AbstractSISerialPortHandler {
 		} else if (data.length > 1 && ((data[1] & 0xff) == 0xD3)) {
 			// auto send
 			Long controlNo = ByteUtility.getLongFromBytes(data[3], data[4]);
-			Long cardNo = ByteUtility.getLongFromBytes(data[5], data[6], data[7], data[8]);
+			Long cardNo = ByteUtility.getLongFromBytes(data[5], data[6], data[7], data[8]) & 16777215L;
 			// auto send punch is very similar to V6 punch
 			Punch punch = SICardUtility.readV6Punch(new byte[] { data[9], data[0], data[10], data[11] }, 0, 1, currentEvtZero);
+			punch.setControlNo(controlNo.toString()); // control no is not sent in punch data
+			getDownloadSession().handleAutoSend(cardNo.toString(), controlNo.toString(), punch);
+		} else if (data.length > 2 && ((data[2] & 0xff) == 0xD3)) {
+			// srr dongle - currently only 1 control supported
+			data[4] &= ~(1 << 7); // remove srr flag
+			Long controlNo = ByteUtility.getLongFromBytes(data[4], data[5]); // check CNH
+			Long cardNo = ByteUtility.getLongFromBytes(data[6], data[7], data[8], data[9]) & 16777215L;
+			// auto send punch is very similar to V6 punch
+			Punch punch = SICardUtility.readV6Punch(new byte[] { data[10], data[1], data[11], data[12] }, 0, 1, currentEvtZero);
 			punch.setControlNo(controlNo.toString()); // control no is not sent in punch data
 			getDownloadSession().handleAutoSend(cardNo.toString(), controlNo.toString(), punch);
 		} else {
