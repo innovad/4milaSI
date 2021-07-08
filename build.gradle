@@ -18,9 +18,9 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'net.java.dev.jna:jna:4.1.0'
-    compile 'org.scream3r:jssc:2.8.0'
-    compile 'com.neuronrobotics:nrjavaserial:3.11.0'
+    compile 'net.java.dev.jna:jna:5.8.0'
+    compile 'io.github.java-native:jssc:2.9.2'
+    compile 'com.neuronrobotics:nrjavaserial:5.2.1'
     compile 'com.sparetimelabs:purejavacomm:0.0.28'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
