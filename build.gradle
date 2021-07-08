@@ -21,7 +21,7 @@ dependencies {
     compile 'net.java.dev.jna:jna:5.8.0'
     compile 'io.github.java-native:jssc:2.9.2'
     compile 'com.neuronrobotics:nrjavaserial:5.2.1'
-    compile 'com.sparetimelabs:purejavacomm:0.0.28'
+    compile 'org.bidib.com.github.purejavacomm:purejavacomm:1.0.3.2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
 }
